@@ -1,18 +1,20 @@
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
-public class FirstAndroidTest {
+public class Android_Build_App_Demo {
 
-    public AndroidDriver<AndroidElement> driver;
+    AppiumDriver driver;
 
     @BeforeTest
     public void setUp() throws MalformedURLException {
@@ -21,17 +23,20 @@ public class FirstAndroidTest {
         caps.setCapability("automationName", "uiautomator2");
         caps.setCapability("platformVersion", "11.0");
         caps.setCapability("deviceName", "Android Emulator");
-        caps.setCapability("app", System.getProperty("user.dir") + "/apps/ApiDemos-debug.apk");
-        driver = new AndroidDriver<>(new URL("http://localhost:4723/wd/hub"), caps);
+        caps.setCapability("app", System.getProperty("user.dir") + "/apps/Calculator.apk");
+        // caps.setCapability("appPackage","com.android.calculator2");
+        //caps.setCapability("appActivity",".Calculator");
+        driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), caps);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     @Test
-    public void click_App_Button() throws InterruptedException {
-        By appLocator = By.xpath("//android.widget.TextView[@content-desc='App']");
-        System.out.println(driver.findElement(appLocator).getText());
-        driver.findElement(appLocator).click();
-        Thread.sleep(5000);
+    public void click_test() {
+        driver.findElement(By.id("digit_8")).click();
+        driver.findElement(By.id("op_add")).click();
+        driver.findElement(By.id("digit_7")).click();
+        driver.findElement(By.id("eq")).click();
+        Assert.assertEquals("15", "15");
 
 
     }
